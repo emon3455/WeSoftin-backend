@@ -31,8 +31,6 @@ async function run() {
         const usersCollections = client.db("jobTask").collection("WesoftinUsers");
 
 
-        // all queries
-
         // get all users data:
         app.get("/users", async (req, res) => {
 
