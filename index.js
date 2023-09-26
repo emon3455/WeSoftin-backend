@@ -39,9 +39,9 @@ async function run() {
             const cars = await usersCollections.find().toArray();
 
             if (req.query?.sort === 'desc') {
-                cars.sort((a, b) => b.price - a.price); // Sort in descending order based on price
+                cars.sort((a, b) => b.age - a.age); // Sort in descending order based on age
             } else {
-                cars.sort((a, b) => a.price - b.price); // Sort in ascending order based on price
+                cars.sort((a, b) => a.age - b.age); // Sort in ascending order based on age
             }
             res.send(cars);
         })
