@@ -53,6 +53,48 @@ async function run() {
             res.send(result);
         })
 
+        // ----------- POST: Add a new user ------------
+        app.post("/users", async (req, res) => {
+            const newUser = req.body;
+            const result = await usersCollections.insertOne(newUser);
+            res.send(result);
+        });
+
+        // ----------- DELETE: Remove a user by id ------------
+        app.delete("/users/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await usersCollections.deleteOne(query);
+            res.send(result);
+        });
+
+        // ----------- UPDATE: Modify user details ------------
+        app.put("/users/:id", async (req, res) => {
+            const id = req.params.id;
+            const updatedUser = req.body;
+            const query = { _id: new ObjectId(id) };
+
+            const updateDoc = {
+                $set: {
+                    name: updatedUser.name,
+                    image: updatedUser.image,
+                    age: updatedUser.age,
+                    nationality: updatedUser.nationality,
+                    skills: updatedUser.skills,
+                    nid: updatedUser.nid,
+                    address: updatedUser.address,
+                    email: updatedUser.email,
+                    phone: updatedUser.phone,
+                    website: updatedUser.website,
+                    gender: updatedUser.gender,
+                    educationalQualifications: updatedUser.educationalQualifications
+                },
+            };
+
+            const result = await usersCollections.updateOne(query, updateDoc);
+            res.send(result);
+        });
+
 
         // await client.db("admin").command({ ping: 1 });
         // console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -66,10 +108,10 @@ run().catch(console.dir);
 
 
 app.get("/", (req, res) => {
-    res.send("Wesoftin network is running...");
+    res.send("Network is running...");
 })
 
 
 app.listen(port, (req, res) => {
-    console.log(`Wesoftin network is running on port: ${port}`);
+    console.log(`Network is running on port: ${port}`);
 })
